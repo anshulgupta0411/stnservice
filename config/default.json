@@ -1,0 +1,17 @@
+{
+   "app" : {
+        "port" : 5000,
+        "gcInterval" : 3600000    
+    },
+    "log":
+    {
+        "filePath" : "stnservice.log",
+        "level" : "debug"
+    },
+    "mdbConfig": {
+        "connectString": "mongodb://localhost:27017",
+        "dbName" : "stn_mgmt",
+        "user": "",
+        "password": ""
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "id" : "1",
+    "name" : "Supplier1",
+    "code" : "s1",
+    "enabled" : 1,
+    "created_by" : "admin",
+    "created_on" : "",
+    "modified_on" : ""
+}

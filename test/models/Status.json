@@ -1,0 +1,9 @@
+{
+    "id" : "1",
+    "name" : "Active User",
+    "code" : "USER_ACTIVE",
+    "enabled" : 1,
+    "created_by" : "admin",
+    "created_on" : "",
+    "modified_on" : ""
+}

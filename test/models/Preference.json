@@ -1,0 +1,9 @@
+{
+    "id" : "1",
+    "name" : "Add/Edit Users",
+    "code" : "ADD_EDIT_USER",
+    "enabled" : 1,
+    "created_by" : "admin",
+    "created_on" : "",
+    "modified_on" : ""
+}

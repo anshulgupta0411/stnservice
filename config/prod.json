@@ -1,0 +1,16 @@
+{
+    "app" : {
+         "port" : 5000,
+         "gcInterval" : 3600000    
+     },
+     "log":
+     {
+         "filePath" : "/usr/apps/iop/apps/logs/alarmservice.log",
+         "level" : "debug"
+     },
+     "mdbConfig": {
+         "connectString": "mongodb://localhost:27017/cacheDb",
+         "user": "",
+         "password": ""
+     }
+ }

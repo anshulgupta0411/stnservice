@@ -1,0 +1,13 @@
+{
+    "id" : "1",
+    "fname" : "Anshul",
+    "lname" : "Gupta",
+    "login_id" : "gupan2p",
+    "login_id_upper" : "GUPAN2P",
+    "password" : "AAA",
+    "email" : "anshul.gupta@verizon.com",
+    "status" : "A/D/I", 
+    "created_by" : "admin",
+    "created_on" : "",
+    "modified_on" : ""
+}

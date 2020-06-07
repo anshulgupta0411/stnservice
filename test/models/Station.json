@@ -1,0 +1,28 @@
+{
+    "id" : "1",
+    "name" : "Stn1",
+    "code" : "STN_1",
+    "tanks" : [
+        {
+            "id" : "",
+            "name" : "",
+            "code" : "",
+            "product" : {
+                "id" : "1",
+                "name" : "Premium Gas",
+                "code" : "PREM_GAS"
+            },
+            "pumps" : [
+                {
+                    "id" : "",
+                    "name" : "",
+                    "code" : ""
+                }
+            ]
+        }
+    ],
+    "enabled" : 1,
+    "created_by" : "admin",
+    "created_on" : "",
+    "modified_on" : ""
+}
