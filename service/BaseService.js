@@ -32,7 +32,7 @@ class BaseService{
     update(obj){
         console.log("BaseService :: update");
         return new Promise((resolve, reject) => {
-            this.dao.updateById(this.collection, obj, obj._id).then(result => {
+            this.dao.updateById(this.collection, obj, obj.id).then(result => {
                 resolve({users : result});
             }).catch(e=>{
                 console.log("UserService :: updateUser, ERROR : %j", e);
@@ -45,7 +45,7 @@ class BaseService{
     getDetails(obj){
         console.log("BaseService :: getDetails");
         return new Promise((resolve, reject) => {
-            this.dao.findById(this.collection, obj._id).then(result => {
+            this.dao.findById(this.collection, obj.id).then(result => {
                 resolve(result);
             }).catch(e=>{
                 let error = new ServerError(httpConstants.HTTP_SERVER_ERROR, e.stack, e.message);
@@ -57,7 +57,7 @@ class BaseService{
     delete(obj){
         console.log("BaseService :: delete");
         return new Promise((resolve, reject) => {
-            this.dao.deleteById(this.collection, obj._id).then(result => {
+            this.dao.deleteById(this.collection, obj.id).then(result => {
                 resolve(result);
             }).catch(e=>{
                 let error = new ServerError(httpConstants.HTTP_SERVER_ERROR, e.stack, e.message);
