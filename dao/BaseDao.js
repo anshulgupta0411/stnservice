@@ -18,6 +18,20 @@ class BaseDao {
         });
     }
 
+    findOne(collectionName, query) {
+
+        return new Promise((resolve, reject) => {
+            console.log(`BaseDao::find - collectionName : ${collectionName}, query : ${query} `);
+            mongoDriver.findOne(collectionName, query)
+                .then(data => {
+                    console.log(`BaseDao::find - collectionName : ${collectionName}, query : ${query}, data : ${data} `);
+                    resolve(data);
+                }).catch(e => {
+                    reject(e);
+                });
+        });
+    }
+
     findById(collectionName, id) {
         console.log(`BaseDao::findById - collectionName : ${collectionName}, id : ${id} `);
         return new Promise((resolve, reject) => {

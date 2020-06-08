@@ -1,7 +1,12 @@
 {
    "app" : {
         "port" : 5000,
-        "gcInterval" : 3600000    
+        "gcInterval" : 3600000 
+    },
+    "auth":{
+        "default_password" : "$ach!nT3ndulk@r",
+        "auth_ttl" : 86400,
+        "myprivatekey" : "anshshubh04111812"
     },
     "log":
     {

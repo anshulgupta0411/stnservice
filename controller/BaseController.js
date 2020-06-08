@@ -1,5 +1,6 @@
 const ValidationError = require('../response/ValidationError');
 const ServerError = require('../response/ServerError');
+const AuthError = require('../response/AuthError');
 
 class BaseController {
     constructor() {
@@ -7,7 +8,7 @@ class BaseController {
     }
 
     sendResponse(req, res, httpResponse) {
-        console.log("BaseController::sendError sendResponse");
+        console.log("BaseController::sendResponse");
         return res.status(httpResponse.status_code).json(httpResponse);
     }
 
@@ -24,7 +25,12 @@ class BaseController {
                 console.log("BaseController::sendError ServerError occured - %j", err);
                 return res.status(err.status_code).json(err);
 
-            } else {
+            } else if(err instanceof AuthError){
+
+                console.log("BaseController::sendError AuthError occured - %j", err);
+                return res.status(err.status_code).json(err);
+            }
+            else {
                 console.log("BaseController::sendError Runtime error occured - %j", err);
                 let output = {};
                 output.code = -1;

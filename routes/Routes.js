@@ -11,6 +11,7 @@ router.use('/', function (req, res, next) {
     next();
 });
 
+router.use('/auth', require('./Auth'));
 router.use('/user', require('./User'));
 router.use('/customer', require('./Customer'));
 router.use('/supplier', require('./Supplier'));

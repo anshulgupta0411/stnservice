@@ -16,7 +16,7 @@ class UserController extends BaseController {
             let msg = "User created successfully";
             let userForm = new form(req, res);
             userForm.validateCreate();
-            await service.create(userForm.getCreateParams());
+            await service.create(await userForm.getCreateParams());
             super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, null, null));
         } catch (e) {
             console.log("UserController::createUser ERROR - %j", e.stack);
@@ -31,7 +31,7 @@ class UserController extends BaseController {
             let msg = "Users retrieved successfully";
             let root = "users";
             logger.debug("UserController :: getUsers ");
-            let users = await service.getAll();
+            let users = await service.findAll();
             logger.debug("UserController :: getUsers, Users = %j", users);
             super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, root, users));
         } catch (e) {
@@ -47,7 +47,7 @@ class UserController extends BaseController {
             let msg = "User updated successfully";
             let userForm = new form(req, res);
             userForm.validateCreate();
-            await service.update(userForm.getUpdateParams());
+            await service.update(await userForm.getUpdateParams());
             super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, null, null));
         } catch (e) {
             console.log("UserController::updateUser ERROR - %j", e.stack);
@@ -62,7 +62,7 @@ class UserController extends BaseController {
             let msg = "User details retrieved successfully";
             let root = "user";
             let userForm = new form(req, res);
-            let user = await service.getDetails(userForm);
+            let user = await service.findById(userForm);
             super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, root, user));
         } catch (e) {
             console.log("UserController::createUser ERROR - %j", e);
@@ -87,16 +87,18 @@ class UserController extends BaseController {
     }
 
     async changePassword(req, res, next){
+        
         try {
 
-            let msg = "User deleted successfully";
+            let msg = "Password updated successfully! Please login again";
             let root = null;
             let userForm = new form(req, res);
-            await service.deleteUser(userForm);
+            await userForm.validateChangePwd();
+            await service.changePassword(await userForm.getChangePwdParams());
             super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, root, null));
 
         } catch (e) {
-            console.log("UserController::createUser ERROR - %j", e);
+            console.log("UserController::changePassword ERROR - %j", e);
             super.sendError(req, res, e);
         }
     }

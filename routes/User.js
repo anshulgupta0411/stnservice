@@ -9,9 +9,9 @@ router.get('/:id', controller.getDetails);
 
 /* POST */
 router.post('/', controller.create);
-router.post('/password', controller.create);
 
 /* PUT */
+router.put('/password/', controller.changePassword);
 router.put('/:id', controller.update);
 
 /* DELETE */
