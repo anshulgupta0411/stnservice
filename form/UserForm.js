@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const _ = require('lodash');
 const stringUtil = require('../util/StringUtil');
 const error = require('../response/ValidationError');
-let statusConst = require('../constants/StatusConstants');
+const statusConst = require('../constants/StatusConstants');
 
 const createMandatoryFields = ["fname", "lname", "email"];
 const updateMandatoryFields = ["id","fname", "lname", "email"];
@@ -34,13 +34,6 @@ class UserForm {
         this.created_by = reqBody.created_by ? reqBody.created_by : null;
         this.preferences = reqBody.preferences ? reqBody.preferences : null;
         this.id = reqParams && reqParams.id ? reqParams.id : 0;
-/*
-        this.password = reqBody.password ? reqBody.password : await bcrypt.hash(config.auth.default_password, PASSWORD_LENGTH);
-        this.old_password = reqBody.old_password ? await bcrypt.hash(reqBody.old_password, PASSWORD_LENGTH) : null;
-        this.new_password = reqBody.new_password ? await bcrypt.hash(reqBody.new_password, PASSWORD_LENGTH) : null;
-        this.retype_password = reqBody.retype_password ? await bcrypt.hash(reqBody.retype_password, PASSWORD_LENGTH) : null;
-*/
-
         this.password = reqBody.password ? reqBody.password : config.auth.default_password;
         this.old_password = reqBody.old_password ? reqBody.old_password : null;
         this.new_password = reqBody.new_password ? reqBody.new_password : null;
@@ -113,9 +106,6 @@ class UserForm {
         obj.login_id_upper = this.login_id.toUpperCase();
         obj.status = statusConst.USER_ACTIVE;
         obj.updated_by = this.updated_by ? this.updated_by : 'admin';
-        
-        //obj.password = await bcrypt.hash(this.new_password, PASSWORD_LENGTH);
-        //obj.old_password = await bcrypt.hash(this.old_password, PASSWORD_LENGTH);
         obj.old_password = this.old_password;
         obj.password = this.new_password;
         return obj;

@@ -2,6 +2,9 @@ const BaseDao = require('./BaseDao');
 
 class CustomerDao extends BaseDao{
 
+    constructor(){
+        super();
+    }
 }
 
-module.exports = CustomerDao;
+module.exports = new CustomerDao();

@@ -2,6 +2,14 @@ module.exports = {
 
     USER_ACTIVE : 0,
     USER_INACTIVE : 1,
-    USER_DELETED : 2
+    USER_DELETED : 2,  
+
+    CUSTOMER_ACTIVE : 0,
+    CUSTOMER_INACTIVE : 1,
+    CUSTOMER_DELETED : 2,
     
+    SUPPLIER_ACTIVE : 0,
+    SUPPLIER_INACTIVE : 1,
+    SUPPLIER_DELETED : 2
+
 }

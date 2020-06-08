@@ -1,13 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controller/CustomerController');
-router.get('/',function(req, res){    
-  res.send('Get all customers.');
-});
 
-router.post('/', function(req, res) {
-  // Create user
-  res.send('Some response.');
-});
+/**GET  */
+router.get('/', controller.getAll);
+router.get('/:id', controller.getDetails);
 
+/* POST */
+router.post('/', controller.create);
+
+/* PUT */
+router.put('/:id', controller.update);
+
+/* DELETE */
+router.delete('/:id', controller.delete);
+
+module.exports = router;
 module.exports = router;

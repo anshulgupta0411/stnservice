@@ -1,6 +1,9 @@
 const ServerError = require('../response/ServerError');
 const httpConstants = require('../constants/HTTPConstants');
 
+
+const _ = require('lodash');
+
 class BaseService {
     constructor(collection, dao) {
         this.dao = dao;
@@ -50,6 +53,7 @@ class BaseService {
         console.log("BaseService :: findOne");
         return new Promise((resolve, reject) => {
             this.dao.findOne(this.collection, query).then(result => {
+                if(!result || _.isEmpty(result)) reject(new ServerError(httpConstants.HTTP_NOT_FOUND, 'Resource not found!', "Resource not found!"));
                 resolve(result);
             }).catch(e => {
                 reject(e);
@@ -62,7 +66,8 @@ class BaseService {
         console.log("BaseService :: getDetails");
         return new Promise((resolve, reject) => {
             this.dao.findById(this.collection, obj.id).then(result => {
-                resolve(result);
+                if(!result || _.isEmpty(result)) reject(new ServerError(httpConstants.HTTP_NOT_FOUND, 'Resource not found!', "Resource not found!"));
+                resolve(result); 
             }).catch(e => {
                 let error = new ServerError(httpConstants.HTTP_SERVER_ERROR, e.stack, e.message);
                 reject(error);

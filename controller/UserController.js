@@ -3,6 +3,7 @@ const service = require('../service/UserService');
 const BaseController = require('./BaseController');
 const httpConstants = require('../constants/HTTPConstants');
 const httpResponse =  require('../response/HttpResponse');
+const statusConstants = require('../constants/StatusConstants');
 
 class UserController extends BaseController {
 
@@ -33,7 +34,7 @@ class UserController extends BaseController {
             logger.debug("UserController :: getUsers ");
             let users = await service.findAll();
             logger.debug("UserController :: getUsers, Users = %j", users);
-            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, root, users));
+            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_OK, msg, root, users));
         } catch (e) {
             console.log("UserController::getUsers ERROR - %j", e);
             return super.sendError(req, res, e);
@@ -48,7 +49,7 @@ class UserController extends BaseController {
             let userForm = new form(req, res);
             userForm.validateCreate();
             await service.update(await userForm.getUpdateParams());
-            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, null, null));
+            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_OK, msg, null, null));
         } catch (e) {
             console.log("UserController::updateUser ERROR - %j", e.stack);
             console.log("UserController::updateUser ERROR - %s", e.message);
@@ -63,7 +64,7 @@ class UserController extends BaseController {
             let root = "user";
             let userForm = new form(req, res);
             let user = await service.findById(userForm);
-            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, root, user));
+            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_OK, msg, root, user));
         } catch (e) {
             console.log("UserController::createUser ERROR - %j", e);
             super.sendError(req, res, e);
@@ -76,9 +77,11 @@ class UserController extends BaseController {
 
             let msg = "User deleted successfully";
             let root = null;
-            let userForm = new form(req, res);
-            await service.delete(userForm);
-            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, root, null));
+            let userForm = new form(req, res); 
+            let user = await service.findById(userForm);
+            user.status = statusConstants.USER_DELETED;
+            await service.updateById(user);
+            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_OK, msg, root, null));
 
         } catch (e) {
             console.log("UserController::createUser ERROR - %j", e);
@@ -95,7 +98,7 @@ class UserController extends BaseController {
             let userForm = new form(req, res);
             await userForm.validateChangePwd();
             await service.changePassword(await userForm.getChangePwdParams());
-            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, root, null));
+            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_OK, msg, root, null));
 
         } catch (e) {
             console.log("UserController::changePassword ERROR - %j", e);

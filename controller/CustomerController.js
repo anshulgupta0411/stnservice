@@ -3,6 +3,7 @@ const service = require('../service/CustomerService');
 const BaseController = require('./BaseController');
 const httpConstants = require('../constants/HTTPConstants');
 const httpResponse =  require('../response/HttpResponse');
+const statusConstants = require('../constants/StatusConstants');
 
 class CustomerController extends BaseController{
     
@@ -13,14 +14,14 @@ class CustomerController extends BaseController{
     async create(req, res, next) {
 
         try {
-            let msg = "User created successfully";
-            let userForm = new form(req, res);
-            userForm.validateCreate();
-            await service.create(userForm.getCreateParams());
+            let msg = "customer created successfully";
+            let customerForm = new form(req, res);
+            customerForm.validateCreate();
+            await service.create(await customerForm.getCreateParams());
             super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, null, null));
         } catch (e) {
-            console.log("UserController::createUser ERROR - %j", e.stack);
-            console.log("UserController::createUser ERROR - %s", e.message);
+            console.log("customerController::createcustomer ERROR - %j", e.stack);
+            console.log("customerController::createcustomer ERROR - %s", e.message);
             super.sendError(req, res, e);
         }
     }
@@ -28,14 +29,14 @@ class CustomerController extends BaseController{
     async getAll(req, res, next) {
 
         try {
-            let msg = "Users retrieved successfully";
-            let root = "users";
-            logger.debug("UserController :: getUsers ");
-            let users = await service.getAll();
-            logger.debug("UserController :: getUsers, Users = %j", users);
-            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, root, users));
+            let msg = "customers retrieved successfully";
+            let root = "customers";
+            logger.debug("customerController :: getcustomers ");
+            let customers = await service.findAll();
+            logger.debug("customerController :: getcustomers, customers = %j", customers);
+            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_OK, msg, root, customers));
         } catch (e) {
-            console.log("UserController::getUsers ERROR - %j", e);
+            console.log("customerController::getcustomers ERROR - %j", e);
             return super.sendError(req, res, e);
         }
 
@@ -44,14 +45,14 @@ class CustomerController extends BaseController{
     async update(req, res, next) {
 
         try {
-            let msg = "User updated successfully";
-            let userForm = new form(req, res);
-            userForm.validateCreate();
-            await service.update(userForm.getUpdateParams());
-            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, null, null));
+            let msg = "customer updated successfully";
+            let customerForm = new form(req, res);
+            customerForm.validateCreate();
+            await service.update(await customerForm.getUpdateParams());
+            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_OK, msg, null, null));
         } catch (e) {
-            console.log("UserController::updateUser ERROR - %j", e.stack);
-            console.log("UserController::updateUser ERROR - %s", e.message);
+            console.log("customerController::updatecustomer ERROR - %j", e.stack);
+            console.log("customerController::updatecustomer ERROR - %s", e.message);
             super.sendError(req, res, e);
         }
     }
@@ -59,13 +60,13 @@ class CustomerController extends BaseController{
     async getDetails(req, res, next) {
 
         try {
-            let msg = "User details retrieved successfully";
-            let root = "user";
-            let userForm = new form(req, res);
-            let user = await service.getDetails(userForm);
-            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, root, user));
+            let msg = "customer details retrieved successfully";
+            let root = "customer";
+            let customerForm = new form(req, res);
+            let customer = await service.findById(customerForm);
+            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_OK, msg, root, customer));
         } catch (e) {
-            console.log("UserController::createUser ERROR - %j", e);
+            console.log("customerController::createcustomer ERROR - %j", e);
             super.sendError(req, res, e);
         }
 
@@ -74,14 +75,16 @@ class CustomerController extends BaseController{
     async delete(req, res, next) {
         try {
 
-            let msg = "User deleted successfully";
+            let msg = "customer deleted successfully";
             let root = null;
-            let userForm = new form(req, res);
-            await service.delete(userForm);
-            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_CREATED, msg, root, null));
+            let customerForm = new form(req, res);
+            let customer = await service.findById(customerForm);
+            customer.status = statusConstants.USER_DELETED;
+            await service.updateById(customer);
+            super.sendResponse(req, res, new httpResponse(httpConstants.HTTP_OK, msg, root, null));
 
         } catch (e) {
-            console.log("UserController::createUser ERROR - %j", e);
+            console.log("customerController::createcustomer ERROR - %j", e);
             super.sendError(req, res, e);
         }
     }
